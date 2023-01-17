@@ -1,0 +1,26 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["interactiveTransactions"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model tax_rules {
+  id         String  @id @db.Uuid
+  name       String
+  percentage Decimal @db.Decimal
+  deleted    Boolean @default(false)
+}
+
+model event_log {
+  id        Int    @id @default(autoincrement())
+  entity    String
+  entity_id String @db.Uuid
+  version   Int
+  data      Json
+
+  @@unique([entity, entity_id, version])
+}
