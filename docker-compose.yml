@@ -38,8 +38,8 @@ services:
     environment:
       APP_PORT: 3000
       DB_URL: postgres://dbuser:dbpassword@db:5432/cart
-      TAX_URL: http://tax-service:3001
-      PRODUCT_URL: http://product-service:3002
+      TAX_URL: http://tax-service:3000
+      PRODUCT_URL: http://product-service:3000
     ports:
       - 3000:3000
       - 9229:9229

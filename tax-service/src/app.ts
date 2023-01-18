@@ -8,8 +8,8 @@ const app = fastify({
   logger: true
 })
 
-app.post('/tax', async(req: any, res: any) => {
-  const { product_type }: { product_type: string } = req.body
+app.get('/tax/:product_type', async(req: any, res: any) => {
+  const { product_type }: { product_type: string } = req.params
 
   const tax = await prisma.tax.findUnique({
     where: {
@@ -20,7 +20,7 @@ app.post('/tax', async(req: any, res: any) => {
   res.send(tax)
 })
 
-app.listen({ port: PORT }, (err: any, address: any) => {
+app.listen({ host: '0.0.0.0', port: PORT }, (err: any, address: any) => {
   if (err) {
     app.log.error(err)
     process.exit(1)

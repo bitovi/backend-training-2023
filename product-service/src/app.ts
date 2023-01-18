@@ -10,11 +10,21 @@ const app = fastify({
 })
 
 app.get('/products', async(req: any, res: any) => {
-  const cart = await prisma.product.findMany()
-  res.send(cart)
+  const products = await prisma.product.findMany()
+  res.send(products)
 })
 
-app.listen({ port: PORT }, (err: any, address: any) => {
+app.get('/products/:productId', async(req: any, res: any) => {
+  const { productId }: { productId: string } = req.params
+  const product = await prisma.product.findUnique({
+    where: {
+      productid: productId
+    }
+  })
+  res.send(product)
+})
+
+app.listen({ host: '0.0.0.0', port: PORT }, (err: any, address: any) => {
   if (err) {
     app.log.error(err)
     process.exit(1)
