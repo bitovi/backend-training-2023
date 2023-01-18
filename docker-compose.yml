@@ -26,7 +26,7 @@ services:
     depends_on:
       - db
     volumes: 
-      - ./cart-service/src:/usr/src/app/src
+      - ./cart-service:/usr/src/app
       - /usr/src/app/node_modules
     build:
       context: ./cart-service
@@ -35,12 +35,13 @@ services:
     environment:
       APP_PORT: 3000
       DB_URL: postgres://dbuser:dbpassword@db:5432/cart
+      TAX_URL: http://tax-service:3001
     ports:
       - 3000:3000
       - 9229:9229
     command: >
       sh -c '\
-        node --inspect=0.0.0.0:9229 dist/app.js
+        npm run dev
       '
 
   tax-service:
@@ -50,19 +51,19 @@ services:
     depends_on:
       - db
     volumes: 
-      - ./tax-service/src:/usr/src/app/src
+      - ./tax-service:/usr/src/app
       - /usr/src/app/node_modules
     build:
       context: ./tax-service
       dockerfile: Dockerfile
     restart: always
     environment:
-      APP_PORT: 3001
+      APP_PORT: 3000
       DB_URL: postgres://dbuser:dbpassword@db:5432/tax
     ports:
       - 3001:3000
       - 9230:9229
     command: >
       sh -c '\
-        node --inspect=0.0.0.0:9229 dist/app.js
+        npm run dev
       '
