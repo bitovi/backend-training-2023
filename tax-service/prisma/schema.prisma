@@ -8,7 +8,7 @@ datasource db {
 }
 
 model tax {
-  taxid     String @id @db.Uuid
-  productid String @unique(map: "productid_unique") @db.Uuid
-  amount    Int
+  taxid        String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  product_type String @unique(map: "product_type_unique")
+  percentage   Float
 }

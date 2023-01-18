@@ -6,9 +6,9 @@ create database tax;
 
 create table tax
 (
-  taxid          UUID primary key,
-  productid uuid not null,
-  amount int not null
+  taxid          UUID primary key DEFAULT gen_random_uuid(),
+  product_type text not null,
+  percentage float not null
 );
 
-CREATE UNIQUE INDEX productid_unique ON tax (productid);
+CREATE UNIQUE INDEX product_type_unique ON tax (product_type);

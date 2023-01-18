@@ -1,23 +1,17 @@
 import fastify from 'fastify'
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { PrismaClient } from '@prisma/client'
 
-const PORT = Number(process.env?.APP_PORT) || 3001
+const PORT = Number(process.env?.APP_PORT) || 3002
 
 const prisma = new PrismaClient()
 const app = fastify({
   logger: true
 })
 
-app.post('/tax', async(req: any, res: any) => {
-  const { product_type }: { product_type: string } = req.body
-
-  const tax = await prisma.tax.findUnique({
-    where: {
-      product_type
-    }
-  })
-
-  res.send(tax)
+app.get('/products', async(req: any, res: any) => {
+  const cart = await prisma.product.findMany()
+  res.send(cart)
 })
 
 app.listen({ port: PORT }, (err: any, address: any) => {
@@ -26,5 +20,5 @@ app.listen({ port: PORT }, (err: any, address: any) => {
     process.exit(1)
   }
   // Server is now listening on ${address}
-  console.log(`Tax listening on ${address}`)
+  console.log(`Products listening on ${address}`)
 })
