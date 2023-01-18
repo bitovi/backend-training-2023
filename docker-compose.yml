@@ -14,7 +14,7 @@ services:
       - 5432:5432
     volumes:
         - ./cart-service/db/init.sql:/docker-entrypoint-initdb.d/init-cart.sql
-        - ./product-service/db/init.sql:/docker-entrypoint-initdb.d/init-product.sql
+        - ./tax-service/db/init.sql:/docker-entrypoint-initdb.d/init-tax.sql
     environment:
       POSTGRES_USER: dbuser
       POSTGRES_PASSWORD: dbpassword
@@ -43,22 +43,22 @@ services:
         node --inspect=0.0.0.0:9229 dist/app.js
       '
 
-  product-service:
+  tax-service:
     networks:
       - network
-    container_name: product-service
+    container_name: tax-service
     depends_on:
       - db
     volumes: 
-      - ./product-service/src:/usr/src/app/src
+      - ./tax-service/src:/usr/src/app/src
       - /usr/src/app/node_modules
     build:
-      context: ./product-service
+      context: ./tax-service
       dockerfile: Dockerfile
     restart: always
     environment:
       APP_PORT: 3001
-      DATABASE_CONNECTION_STRING: postgres://dbuser:dbpassword@db:5432/product
+      DATABASE_CONNECTION_STRING: postgres://dbuser:dbpassword@db:5432/tax
     ports:
       - 3001:3000
       - 9230:9229

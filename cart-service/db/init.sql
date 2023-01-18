@@ -6,5 +6,6 @@ create database cart;
 
 create table cart
 (
-  id          UUID primary key
+  cartId          UUID primary key
+  products JSON
 );

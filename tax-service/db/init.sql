@@ -1,10 +1,10 @@
 create extension if not exists "uuid-ossp";
 
-create database product;
+create database tax;
 
-\c product
+\c tax
 
-create table product
+create table tax
 (
   id          UUID primary key
 );

@@ -3,6 +3,10 @@ datasource db {
   url      = env("DB_URL")
 }
 
+generator client {
+  provider = "prisma-client-js"
+}
 model cart {
-  id String @id @db.Uuid
+  cartid   String @id @db.Uuid
+  products Json?  @db.Json
 }
