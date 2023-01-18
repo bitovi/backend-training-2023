@@ -26,12 +26,11 @@ services:
     depends_on:
       - db
     volumes: 
-      - ./cart-service/src:/usr/src/app/src
+      - ./cart-service:/usr/src/app
       - /usr/src/app/node_modules
     build:
       context: ./cart-service
       dockerfile: Dockerfile
-    restart: always
     environment:
       APP_PORT: 3000
       DATABASE_CONNECTION_STRING: postgres://dbuser:dbpassword@db:5432/cart
@@ -40,7 +39,7 @@ services:
       - 9229:9229
     command: >
       sh -c '\
-        node --inspect=0.0.0.0:9229 dist/app.js
+        npm run dev
       '
 
   product-service:
@@ -50,12 +49,11 @@ services:
     depends_on:
       - db
     volumes: 
-      - ./product-service/src:/usr/src/app/src
+      - ./product-service:/usr/src/app
       - /usr/src/app/node_modules
     build:
       context: ./product-service
       dockerfile: Dockerfile
-    restart: always
     environment:
       APP_PORT: 3001
       DATABASE_CONNECTION_STRING: postgres://dbuser:dbpassword@db:5432/product
@@ -64,5 +62,5 @@ services:
       - 9230:9229
     command: >
       sh -c '\
-        node --inspect=0.0.0.0:9229 dist/app.js
+        npm run dev
       '
