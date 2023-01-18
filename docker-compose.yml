@@ -34,7 +34,7 @@ services:
     restart: always
     environment:
       APP_PORT: 3000
-      DATABASE_CONNECTION_STRING: postgres://dbuser:dbpassword@db:5432/cart
+      DB_URL: postgres://dbuser:dbpassword@db:5432/cart
     ports:
       - 3000:3000
       - 9229:9229
@@ -58,7 +58,7 @@ services:
     restart: always
     environment:
       APP_PORT: 3001
-      DATABASE_CONNECTION_STRING: postgres://dbuser:dbpassword@db:5432/tax
+      DB_URL: postgres://dbuser:dbpassword@db:5432/tax
     ports:
       - 3001:3000
       - 9230:9229

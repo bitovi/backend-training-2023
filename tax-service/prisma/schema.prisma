@@ -1,8 +1,14 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
 datasource db {
   provider = "postgresql"
   url      = env("DB_URL")
 }
 
-model product {
-  id String @id @db.Uuid
+model tax {
+  taxid     String @id @db.Uuid
+  productid String @unique(map: "productid_unique") @db.Uuid
+  amount    Int
 }

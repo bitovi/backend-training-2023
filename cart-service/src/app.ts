@@ -3,6 +3,8 @@ import fastify from 'fastify'
 import { uuid } from 'uuidv4'
 import { PrismaClient } from '@prisma/client'
 
+const PORT = Number(process.env?.APP_PORT) || 3000
+
 const prisma = new PrismaClient()
 const app = fastify({
   logger: true
@@ -23,11 +25,14 @@ app.post('/cart', async(req: any, res: any) => {
 
 app.post('/cart/add', async(req: any, res: any) => {
   const { cartId, productId, quantity, price } = req.body
+
+  // Look up existing cart, so we can add products
   const cart = await prisma.cart.findUnique({
     where: {
       cartid: cartId
     }
   })
+  // Update the cart
   const products = [...((cart?.products as Array<any>) || []), { productId, quantity, price }]
   const updatedCart = await prisma.cart.upsert({
     where: {
@@ -45,11 +50,11 @@ app.post('/cart/add', async(req: any, res: any) => {
   res.send(updatedCart)
 })
 
-app.listen({ port: 3000 }, (err: any, address: any) => {
+app.listen({ port: PORT }, (err: any, address: any) => {
   if (err) {
     app.log.error(err)
     process.exit(1)
   }
   // Server is now listening on ${address}
-  console.log(`Listening on ${address}`)
+  console.log(`Cart listening on ${address}`)
 })

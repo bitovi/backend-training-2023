@@ -6,5 +6,9 @@ create database tax;
 
 create table tax
 (
-  id          UUID primary key
+  taxid          UUID primary key,
+  productid uuid not null,
+  amount int not null
 );
+
+CREATE UNIQUE INDEX productid_unique ON tax (productid);
