@@ -1,13 +1,68 @@
 version: '3'
 
+networks:
+  network:
+    name: docker-network
+
 services:
   db:
-    container_name: postgres
+    networks:
+      - network
+    container_name: db
     image: postgres
     ports:
       - 5432:5432
     volumes:
-      - ./db:/docker-entrypoint-initdb.d
+        - ./cart-service/db/init.sql:/docker-entrypoint-initdb.d/init-cart.sql
+        - ./product-service/db/init.sql:/docker-entrypoint-initdb.d/init-product.sql
     environment:
       POSTGRES_USER: dbuser
       POSTGRES_PASSWORD: dbpassword
+
+  cart-service:
+    networks:
+      - network
+    container_name: cart-service
+    depends_on:
+      - db
+    volumes: 
+      - ./cart-service/src:/usr/src/app/src
+      - /usr/src/app/node_modules
+    build:
+      context: ./cart-service
+      dockerfile: Dockerfile
+    restart: always
+    environment:
+      APP_PORT: 3000
+      DATABASE_CONNECTION_STRING: postgres://dbuser:dbpassword@db:5432/cart
+    ports:
+      - 3000:3000
+      - 9229:9229
+    command: >
+      sh -c '\
+        node --inspect=0.0.0.0:9229 dist/app.js
+      '
+
+  product-service:
+    networks:
+      - network
+    container_name: product-service
+    depends_on:
+      - db
+    volumes: 
+      - ./product-service/src:/usr/src/app/src
+      - /usr/src/app/node_modules
+    build:
+      context: ./product-service
+      dockerfile: Dockerfile
+    restart: always
+    environment:
+      APP_PORT: 3001
+      DATABASE_CONNECTION_STRING: postgres://dbuser:dbpassword@db:5432/product
+    ports:
+      - 3001:3000
+      - 9230:9229
+    command: >
+      sh -c '\
+        node --inspect=0.0.0.0:9229 dist/app.js
+      '
