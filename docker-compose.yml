@@ -37,7 +37,7 @@ services:
     restart: always
     environment:
       APP_PORT: 3000
-      DB_URL: postgres://dbuser:dbpassword@db:5432/cart
+      DB_URL: postgres://dbuser:dbpassword@db:5432/cart?connect_timeout=300
       TAX_URL: http://tax-service:3000
       PRODUCT_URL: http://product-service:3000
     ports:
@@ -63,7 +63,7 @@ services:
     restart: always
     environment:
       APP_PORT: 3000
-      DB_URL: postgres://dbuser:dbpassword@db:5432/tax
+      DB_URL: postgres://dbuser:dbpassword@db:5432/tax?connect_timeout=300
     ports:
       - 3001:3000
       - 9230:9229
@@ -87,7 +87,7 @@ services:
     restart: always
     environment:
       APP_PORT: 3000
-      DB_URL: postgres://dbuser:dbpassword@db:5432/product
+      DB_URL: postgres://dbuser:dbpassword@db:5432/product?connect_timeout=300
     ports:
       - 3002:3000
       - 9231:9229
