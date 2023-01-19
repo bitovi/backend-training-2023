@@ -11,13 +11,13 @@ const app = fastify({
 app.get('/tax/:product_type', async(req: any, res: any) => {
   const { product_type }: { product_type: string } = req.params
 
-  const tax = await prisma.tax.findUnique({
-    where: {
-      product_type
-    }
-  })
-
-  res.send(tax)
+  // eslint-disable-next-line camelcase
+  const tax: any = await prisma.$queryRaw`select * from get_tax(${product_type})`
+  if (!tax.length) {
+    res.code(404).send({ error: 'Tax not found' })
+    return
+  }
+  res.send(tax[0])
 })
 
 app.listen({ host: '0.0.0.0', port: PORT }, (err: any, address: any) => {

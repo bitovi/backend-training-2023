@@ -12,3 +12,20 @@ create table tax
 );
 
 CREATE UNIQUE INDEX product_type_unique ON tax (product_type);
+
+CREATE OR REPLACE FUNCTION get_tax(
+  pt text
+) RETURNS TABLE (
+	tax tax
+) AS
+$BODY$ 
+begin
+	-- sleep
+  -- get the tax
+  return query (
+    select t.* from tax t, (select pg_sleep(2)) as sleep
+    where product_type = pt
+  );
+END;
+$BODY$
+LANGUAGE plpgsql;
