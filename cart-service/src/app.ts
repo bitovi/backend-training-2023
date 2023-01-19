@@ -21,8 +21,13 @@ app.get('/cart/:cartId', async(req: any, res: any) => {
   })
 
   try {
-    const cartWithTotal = await calculateCartTotal(cart)
-    res.send(cartWithTotal)
+    const { taxes, total, subtotal } = await calculateCartTotal(cart)
+    res.send({
+      ...cart,
+      subtotal,
+      taxes,
+      total
+    })
   } catch (error: any) {
     res.send({ error: error.message })
   }
@@ -61,9 +66,14 @@ app.post('/cart/add', async(req: any, res: any) => {
         products: productsMap
       }
     })
-    const theCart = await calculateCartTotal(updatedCart)
 
-    res.send(theCart)
+    const { taxes, total, subtotal } = await calculateCartTotal(updatedCart)
+    res.send({
+      ...updatedCart,
+      subtotal,
+      taxes,
+      total
+    })
   } catch (error) {
     res.send(error)
   }
