@@ -4,7 +4,7 @@ import fastify from 'fastify'
 import { uuid } from 'uuidv4'
 import { PrismaClient } from '@prisma/client'
 
-const { calculateCartTotal } = require('./util')
+const { calculateCartTotal, checkProductExists } = require('./util')
 
 const PORT = Number(process.env?.APP_PORT) || 3000
 
@@ -41,6 +41,10 @@ app.post('/cart/add', async(req: any, res: any) => {
   const { cartId, productId, quantity } = req.body
 
   try {
+    if (!await checkProductExists(productId)) {
+      res.send({ error: 'Invalid product' })
+      return
+    }
     // Look up existing cart, so we can add products
     const cart = await prisma.cart.findUnique({
       where: {

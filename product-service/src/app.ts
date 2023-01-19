@@ -21,7 +21,11 @@ app.get('/products/:productId', async(req: any, res: any) => {
       productid: productId
     }
   })
-  res.send(product)
+  if (product) {
+    res.send(product)
+  }
+
+  res.code(404).send({ message: 'Product not found' })
 })
 
 app.listen({ host: '0.0.0.0', port: PORT }, (err: any, address: any) => {

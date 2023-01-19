@@ -9,8 +9,9 @@ async function calculateCartTotal(cart: any): Promise<any> {
   let taxes = 0
   let subtotal = 0
   let total = 0
+  const cartProducts = cart?.products || []
 
-  for (const product of cart.products) {
+  for (const product of cartProducts) {
     // Look up product
     console.log('Fetching products')
     const productResp = await fetch(`${PRODUCT_URL}/products`)
@@ -45,6 +46,18 @@ async function calculateCartTotal(cart: any): Promise<any> {
   return { taxes, subtotal, total }
 }
 
+async function checkProductExists(productId: any): Promise<any> {
+  // Look up product
+  console.log('Fetching product')
+  const productResp = await fetch(`${PRODUCT_URL}/products/${productId}`)
+  if (!productResp.ok) {
+    return false
+  }
+
+  return true
+}
+
 module.exports = {
-  calculateCartTotal
+  calculateCartTotal,
+  checkProductExists
 }
