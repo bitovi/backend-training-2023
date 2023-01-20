@@ -1,8 +1,13 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
 datasource db {
   provider = "postgresql"
   url      = env("DB_URL")
 }
 
 model cart {
-  id String @id @db.Uuid
+  id       String @id @db.Uuid
+  products Json?
 }

@@ -15,6 +15,7 @@ services:
     volumes:
         - ./cart-service/db/init.sql:/docker-entrypoint-initdb.d/init-cart.sql
         - ./product-service/db/init.sql:/docker-entrypoint-initdb.d/init-product.sql
+        - ./product-service/db/seed.sql:/docker-entrypoint-initdb.d/seed-product.sql
     environment:
       POSTGRES_USER: dbuser
       POSTGRES_PASSWORD: dbpassword
@@ -33,7 +34,8 @@ services:
       dockerfile: Dockerfile
     environment:
       APP_PORT: 3000
-      DATABASE_CONNECTION_STRING: postgres://dbuser:dbpassword@db:5432/cart
+      DB_URL: postgres://dbuser:dbpassword@db:5432/cart
+      PRODUCT_SERVICE_URL: http://product-service:3000
     ports:
       - 3000:3000
       - 9229:9229
@@ -55,8 +57,8 @@ services:
       context: ./product-service
       dockerfile: Dockerfile
     environment:
-      APP_PORT: 3001
-      DATABASE_CONNECTION_STRING: postgres://dbuser:dbpassword@db:5432/product
+      APP_PORT: 3000
+      DB_URL: postgres://dbuser:dbpassword@db:5432/product
     ports:
       - 3001:3000
       - 9230:9229

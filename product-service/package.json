@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "build": "tsc",
-    "dev": "nodemon",
+    "dev": "npm run prisma:update && nodemon",
     "lint": "eslint . --ext .ts",
     "lint:fix": "npm run lint -- --fix",
     "prisma:update": "prisma db pull && prisma generate"

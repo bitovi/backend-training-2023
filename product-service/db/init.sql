@@ -6,5 +6,7 @@ create database product;
 
 create table product
 (
-  id          UUID primary key
+  id            int primary key,
+  name          text,
+  price   text
 );
