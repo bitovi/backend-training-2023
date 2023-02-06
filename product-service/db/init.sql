@@ -6,8 +6,7 @@ create database product;
 
 create table product
 (
-  productId UUID primary key DEFAULT gen_random_uuid(),
+  "productId" UUID primary key DEFAULT gen_random_uuid(),
   name text not null,
-  amount int not null,
-  type text not null
+  price int not null
 );

@@ -14,25 +14,10 @@ app.get('/products', async(req: any, res: any) => {
   res.send(products)
 })
 
-app.get('/products/:productId', async(req: any, res: any) => {
-  const { productId }: { productId: string } = req.params
-  const product = await prisma.product.findUnique({
-    where: {
-      productid: productId
-    }
-  })
-  if (product) {
-    res.send(product)
-  }
-
-  res.code(404).send({ message: 'Product not found' })
-})
-
 app.listen({ host: '0.0.0.0', port: PORT }, (err: any, address: any) => {
   if (err) {
     app.log.error(err)
     process.exit(1)
   }
-  // Server is now listening on ${address}
-  console.log(`Products listening on ${address}`)
+  console.log(`Products service listening on ${address}`)
 })

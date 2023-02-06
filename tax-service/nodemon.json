@@ -1,6 +1,0 @@
-{
-  "watch": ["src"],
-  "ext": ".ts",
-  "ignore": [],
-  "exec": "kill-port 9229 & node --inspect=0.0.0.0:9229 --nolazy -r module-alias/register -r tsconfig-paths/register -r ts-node/register ./src/app.ts"
-}

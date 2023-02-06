@@ -14,10 +14,8 @@ services:
       - 5432:5432
     volumes:
         - ./cart-service/db/init.sql:/docker-entrypoint-initdb.d/init-cart.sql
-        - ./tax-service/db/init.sql:/docker-entrypoint-initdb.d/init-tax.sql
         - ./product-service/db/init.sql:/docker-entrypoint-initdb.d/init-product.sql
         - ./product-service/db/seed.sql:/docker-entrypoint-initdb.d/seed-product.sql
-        - ./tax-service/db/seed.sql:/docker-entrypoint-initdb.d/seed-tax.sql
     environment:
       POSTGRES_USER: dbuser
       POSTGRES_PASSWORD: dbpassword
@@ -38,35 +36,10 @@ services:
     environment:
       APP_PORT: 3000
       DB_URL: postgres://dbuser:dbpassword@db:5432/cart?connect_timeout=300
-      TAX_URL: http://tax-service:3000
       PRODUCT_URL: http://product-service:3000
     ports:
       - 3000:3000
       - 9229:9229
-    command: >
-      sh -c '\
-        npm run dev
-      '
-
-  tax-service:
-    networks:
-      - network
-    container_name: tax-service
-    depends_on:
-      - db
-    volumes: 
-      - ./tax-service:/usr/src/app
-      - /usr/src/app/node_modules
-    build:
-      context: ./tax-service
-      dockerfile: Dockerfile
-    restart: always
-    environment:
-      APP_PORT: 3000
-      DB_URL: postgres://dbuser:dbpassword@db:5432/tax?connect_timeout=300
-    ports:
-      - 3001:3000
-      - 9230:9229
     command: >
       sh -c '\
         npm run dev

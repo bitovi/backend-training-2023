@@ -8,6 +8,6 @@ datasource db {
 }
 
 model cart {
-  cartid   String @id @db.Uuid
+  cartId   String @id @db.Uuid
   products Json?  @db.Json
 }
