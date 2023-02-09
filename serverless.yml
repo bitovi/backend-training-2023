@@ -1,0 +1,22 @@
+service: backend-training-2023
+
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs16.x
+
+functions:
+  recipes:
+    handler: handler.recipes
+    events:
+      - http: 'GET /recipes'
+
+plugins:
+  - serverless-localstack
+
+custom:
+  localstack:
+    stages:
+      - local
+    autostart: true

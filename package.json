@@ -1,0 +1,11 @@
+{
+  "name": "backend-training-2023",
+  "scripts": {
+    "deploy": "serverless deploy --stage local"
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+    "serverless-localstack": "^1.0.2"
+  }
+}
