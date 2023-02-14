@@ -6,11 +6,37 @@ provider:
   name: aws
   runtime: nodejs16.x
 
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:DescribeTable
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+      Resource:
+        - "Fn::GetAtt": [recipes, Arn]
+
 functions:
   recipes:
-    handler: handler.recipes
+    handler: dist/recipes.list
     events:
       - http: 'GET /recipes'
+    environment:
+      TABLE_NAME: recipes
+      AWS_DEFAULT_REGION: us-east-1
+      AWS_ENDPOINT_URL: http://localhost:4566
+  ingredients:
+    handler: dist/ingredients.list
+    events:
+      - http: 'GET /ingredients'
+    name: 'ingredients'
+    environment:
+      TABLE_NAME: ingredients
+      AWS_DEFAULT_REGION: us-east-1
+      AWS_ENDPOINT_URL: http://localhost:4566
 
 plugins:
   - serverless-localstack
@@ -20,3 +46,34 @@ custom:
     stages:
       - local
     autostart: true
+
+resources:
+  Resources:
+    recipes:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: recipes
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: N
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+    ingredients:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ingredients
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: N
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+
+
