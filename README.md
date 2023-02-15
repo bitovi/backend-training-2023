@@ -5,7 +5,7 @@
 ## Starting all services (and DB)
 
 ```
-docker compose up --buil
+docker compose up --build
 ```
 
 ## Shutting down all services (and DB)
