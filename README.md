@@ -4,7 +4,7 @@
 
 install deps
 ```
-npm i
+npm ci
 ```
 
 start localstack
@@ -22,5 +22,5 @@ npm run deploy
 get a list of recipes
 
 ```
-curl http://localhost:4566/restapis/<id>/local/_user_request_/recipes | jq
+curl http://localhost:4566/restapis/<id>/local/_user_request_/recipes
 ```
