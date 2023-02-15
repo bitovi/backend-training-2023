@@ -18,7 +18,9 @@ const lambdaClient = new LambdaClient(awsConfig)
 
 const IngredientSchema = Type.Object({
   id: Type.Number(),
-  name: Type.String()
+  name: Type.String(),
+  cookTime: Type.Number(),
+  prepTime: Type.Number()
 }, {
   additionalProperties: false
 })
@@ -54,7 +56,7 @@ export async function list() {
     TableName
   }))
 
-  const recipes = Items?.map((item) => unmarshall(item))
+  const recipes = Items?.map((item: any) => unmarshall(item))
   const ingredients = await getIngredients()
 
   validateIngredients(ingredients)
@@ -63,12 +65,18 @@ export async function list() {
     statusCode: 200,
     body: JSON.stringify(
       {
-        recipes: recipes?.map((recipe) => ({
-          ...recipe,
-          ingredients: recipe
+        recipes: recipes?.map((recipe) => {
+          const ingreds = recipe
             .ingredients
             ?.map((ingredientId: Number) => ingredients.find((ingredient) => ingredient.id === ingredientId))
-        }))
+
+          return {
+            ...recipe,
+            ingredients: ingreds,
+            cookTime: ingreds.reduce((acc: Number, cur: {cookTime: any}) => (cur.cookTime + acc), 0),
+            prepTime: ingreds.reduce((acc: Number, cur: {prepTime: any}) => (cur.prepTime + acc), 0)
+          }
+        })
       },
       null,
       2

@@ -64,147 +64,189 @@ const seed = async() => {
         PutRequest: {
           Item: marshall({
             id: 1,
-            name: '30 medium shrimp - peeled and deveined'
+            name: '30 medium shrimp - peeled and deveined',
+            cookTime: 10,
+            prepTime: 10
           })
         }
       }, {
         PutRequest: {
           Item: marshall({
             id: 2,
-            name: '2 tablespoons olive oil'
+            name: '2 tablespoons olive oil',
+            cookTime: 10,
+            prepTime: 10
           })
         }
       }, {
         PutRequest: {
           Item: marshall({
             id: 3,
-            name: '2 tablespoons butter, melted'
+            name: '2 tablespoons butter, melted',
+            cookTime: 10,
+            prepTime: 10
           })
         }
       }, {
         PutRequest: {
           Item: marshall({
             id: 4,
-            name: '2 cloves garlic, minced'
+            name: '2 cloves garlic, minced',
+            cookTime: 10,
+            prepTime: 10
           })
         }
       }, {
         PutRequest: {
           Item: marshall({
             id: 5,
-            name: '½ teaspoon kosher salt'
+            name: '½ teaspoon kosher salt',
+            cookTime: 10,
+            prepTime: 10
           })
         }
       }, {
         PutRequest: {
           Item: marshall({
             id: 6,
-            name: '¼ teaspoon ground black pepper'
+            name: '¼ teaspoon ground black pepper',
+            cookTime: 10,
+            prepTime: 10
           })
         }
       }, {
         PutRequest: {
           Item: marshall({
             id: 7,
-            name: '2 (6 ounce) beef top sirloin steaks'
+            name: '2 (6 ounce) beef top sirloin steaks',
+            cookTime: 10,
+            prepTime: 10
           })
         }
       }, {
         PutRequest: {
           Item: marshall({
             id: 8,
-            name: '2 cups orange juice'
+            name: '2 cups orange juice',
+            cookTime: 10,
+            prepTime: 10
           })
         }
       }, {
         PutRequest: {
           Item: marshall({
             id: 9,
-            name: '1 cup apple cider vinegar'
+            name: '1 cup apple cider vinegar',
+            cookTime: 10,
+            prepTime: 10
           })
         }
       }, {
         PutRequest: {
           Item: marshall({
             id: 10,
-            name: '½ cup Worcestershire sauce'
+            name: '½ cup Worcestershire sauce',
+            cookTime: 10,
+            prepTime: 10
           })
         }
       }, {
         PutRequest: {
           Item: marshall({
             id: 11,
-            name: '1 ½ tablespoons steak seasoning'
+            name: '1 ½ tablespoons steak seasoning',
+            cookTime: 10,
+            prepTime: 10
           })
         }
       }, {
         PutRequest: {
           Item: marshall({
             id: 12,
-            name: 'freshly ground black pepper to taste'
+            name: 'freshly ground black pepper to taste',
+            cookTime: 10,
+            prepTime: 10
           })
         }
       }, {
         PutRequest: {
           Item: marshall({
             id: 13,
-            name: '2 teaspoons olive oil'
+            name: '2 teaspoons olive oil',
+            cookTime: 10,
+            prepTime: 10
           })
         }
       }, {
         PutRequest: {
           Item: marshall({
             id: 14,
-            name: 'sea salt to taste'
+            name: 'sea salt to taste',
+            cookTime: 10,
+            prepTime: 10
           })
         }
       }, {
         PutRequest: {
           Item: marshall({
             id: 15,
-            name: '24 ounces dry fettuccine pasta'
+            name: '24 ounces dry fettuccine pasta',
+            cookTime: 10,
+            prepTime: 10
           })
         }
       }, {
         PutRequest: {
           Item: marshall({
             id: 16,
-            name: '1 cup butter'
+            name: '1 cup butter',
+            cookTime: 10,
+            prepTime: 10
           })
         }
       }, {
         PutRequest: {
           Item: marshall({
             id: 17,
-            name: '¾ pint heavy cream'
+            name: '¾ pint heavy cream',
+            cookTime: 10,
+            prepTime: 10
           })
         }
       }, {
         PutRequest: {
           Item: marshall({
             id: 18,
-            name: 'salt and pepper to taste'
+            name: 'salt and pepper to taste',
+            cookTime: 10,
+            prepTime: 10
           })
         }
       }, {
         PutRequest: {
           Item: marshall({
             id: 19,
-            name: '1 dash garlic salt'
+            name: '1 dash garlic salt',
+            cookTime: 10,
+            prepTime: 10
           })
         }
       }, {
         PutRequest: {
           Item: marshall({
             id: 20,
-            name: '¾ cup grated Romano cheese'
+            name: '¾ cup grated Romano cheese',
+            cookTime: 10,
+            prepTime: 10
           })
         }
       }, {
         PutRequest: {
           Item: marshall({
             id: 21,
-            name: '½ cup grated Parmesan cheese'
+            name: '½ cup grated Parmesan cheese',
+            cookTime: 10,
+            prepTime: 10
           })
         }
       }]
