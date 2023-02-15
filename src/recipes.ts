@@ -23,11 +23,21 @@ const IngredientSchema = Type.Object({
   additionalProperties: false
 })
 
+const DirectionSchema = Type.Object({
+  id: Type.Number(),
+  text: Type.String()
+}, {
+  additionalProperties: false
+})
+
 const IngredientsSchema = Type.Array(IngredientSchema)
+const DirectionsSchema = Type.Array(DirectionSchema)
 
 type Ingredient = Static<typeof IngredientSchema>
+type Direction = Static<typeof DirectionSchema>
 
 const validateIngredientsSchema = ajv.compile<Ingredient[]>(IngredientsSchema)
+const validateDirectionsSchema = ajv.compile<Direction[]>(DirectionsSchema)
 
 async function getIngredients(): Promise<Ingredient[]> {
   const ingredientsResp = await lambdaClient.send(new InvokeCommand({
@@ -49,15 +59,38 @@ function validateIngredients(ingredients: Ingredient[]): void {
   throw new Error('ingredients invalid')
 }
 
+async function getDirections(): Promise<Direction[]> {
+  const directionsResp = await lambdaClient.send(new InvokeCommand({
+    FunctionName: 'directions'
+  }))
+
+  const directions = JSON.parse(
+    Buffer.from(directionsResp.Payload as Uint8Array).toString()
+  )
+
+  return JSON.parse(directions.body)
+}
+
+function validateDirections(directions: Direction[]): void {
+  if (validateDirectionsSchema(directions)) {
+    return
+  }
+
+  throw new Error('directions invalid')
+}
+
 export async function list() {
   const { Items } = await dynamoDBClient.send(new ScanCommand({
     TableName
   }))
 
   const recipes = Items?.map((item) => unmarshall(item))
+
   const ingredients = await getIngredients()
+  const directions = await getDirections()
 
   validateIngredients(ingredients)
+  validateDirections(directions)
 
   return {
     statusCode: 200,
@@ -65,6 +98,9 @@ export async function list() {
       {
         recipes: recipes?.map((recipe) => ({
           ...recipe,
+          directions: recipe
+            .directions
+            ?.map((directionId: Number) => directions.find((direction) => direction.id === directionId)),
           ingredients: recipe
             .ingredients
             ?.map((ingredientId: Number) => ingredients.find((ingredient) => ingredient.id === ingredientId))

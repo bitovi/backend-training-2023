@@ -37,6 +37,16 @@ functions:
       TABLE_NAME: ingredients
       AWS_DEFAULT_REGION: us-east-1
       AWS_ENDPOINT_URL: http://localhost:4566
+  directions:
+    handler: dist/directions.list
+    events:
+      - http: 'GET /directions'
+    name: 'directions'
+    environment:
+      TABLE_NAME: directions
+      AWS_DEFAULT_REGION: us-east-1
+      AWS_ENDPOINT_URL: http://localhost:4566
+
 
 plugins:
   - serverless-localstack
@@ -66,6 +76,19 @@ resources:
       Type: AWS::DynamoDB::Table
       Properties:
         TableName: ingredients
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: N
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+    directions:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: directions
         AttributeDefinitions:
           - AttributeName: id
             AttributeType: N
