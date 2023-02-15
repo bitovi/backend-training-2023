@@ -1,3 +1,5 @@
+/* eslint-disable no-return-assign */
+/* eslint-disable no-param-reassign */
 import { DynamoDBClient, ScanCommand } from '@aws-sdk/client-dynamodb'
 import { LambdaClient, InvokeCommand } from '@aws-sdk/client-lambda'
 import { unmarshall } from '@aws-sdk/util-dynamodb'
@@ -67,7 +69,9 @@ export async function list() {
           ...recipe,
           ingredients: recipe
             .ingredients
-            ?.map((ingredientId: Number) => ingredients.find((ingredient) => ingredient.id === ingredientId))
+            ?.map((ingredientId: Number) => ingredients.find((ingredient) => ingredient.id === ingredientId)),
+          cookTime: recipe.directions.reduce((acc: any, d: { cookTime: any }) => (acc += d.cookTime), 0),
+          prepTime: recipe.directions.reduce((acc: any, d: { prepTime: any }) => (acc += d.prepTime), 0)
         }))
       },
       null,

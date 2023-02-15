@@ -46,6 +46,7 @@ custom:
     stages:
       - local
     autostart: true
+    edgePort: 4666
 
 resources:
   Resources:

@@ -4,7 +4,7 @@ services:
   localstack:
     image: localstack/localstack
     ports:
-      - "4566:4566"
+      - "4666:4566"
     environment:
       - SERVICES=iam,s3,apigateway,lambda,dynamodb,cloudformation
       - AWS_DEFAULT_REGION=us-east-1

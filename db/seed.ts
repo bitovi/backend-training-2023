@@ -2,7 +2,7 @@ import { DynamoDBClient, BatchWriteItemCommand } from '@aws-sdk/client-dynamodb'
 import { marshall } from '@aws-sdk/util-dynamodb'
 
 const region = process.env.AWS_DEFAULT_REGION || 'us-east-1'
-const endpoint = process.env.AWS_ENDPOINT_URL || 'http://localhost:4566'
+const endpoint = process.env.AWS_ENDPOINT_URL || 'http://localhost:4666'
 
 const dbClient = new DynamoDBClient({
   region,
@@ -20,9 +20,9 @@ const seed = async() => {
             url: 'https://www.allrecipes.com/recipe/136525/sexy-shrimp-scampi/',
             ingredients: [1, 2, 3, 4, 5, 6],
             directions: [
-              'Preheat an oven to 350 degrees F (175 degrees C).',
-              'Toss the shrimp in a bowl with the olive oil, melted butter, garlic, salt, and pepper; set aside for 10 minutes. Arrange the shrimp in a circular pattern in a round casserole dish.',
-              'Bake in the preheated oven until the shrimp are pink and cooked through, about 15 minutes.'
+              { text: 'Preheat an oven to 350 degrees F (175 degrees C).', prepTime: 0, cookTime: 0 },
+              { text: 'Toss the shrimp in a bowl with the olive oil, melted butter, garlic, salt, and pepper; set aside for 10 minutes. Arrange the shrimp in a circular pattern in a round casserole dish.', prepTime: 3, cookTime: 12 },
+              { text: 'Bake in the preheated oven until the shrimp are pink and cooked through, about 15 minutes.', prepTime: 0, cookTime: 15 }
             ]
           })
         }
@@ -34,14 +34,14 @@ const seed = async() => {
             url: 'https://www.allrecipes.com/recipe/262181/cast-iron-pan-seared-steak-oven-finished/',
             ingredients: [7, 8, 9, 10, 11, 12, 13, 14],
             directions: [
-              'Place steaks side by side in large casserole dish. Add orange juice, cider vinegar, and Worcestershire sauce. Marinate, uncovered, in the refrigerator for 45 minutes.',
-              'Preheat the oven to 425 degrees F (220 degrees C).',
-              'Remove casserole dish from refrigerator. Cover steaks with plastic wrap and let allow to come to room temperature, at least 15 minutes.',
-              'Place steaks on a clean work surface and generously rub with steak seasoning and black pepper.',
-              'Heat olive oil in a cast-iron skillet over high heat.',
-              'Cook steaks in the hot skillet until lightly browned on the bottom, 2 1/2 minutes. Flip and cook until browned on the other side and red in the center, about 2 minutes more. Transfer skillet with the steaks to the oven.',
-              'Bake in the preheated oven until steaks are firm and reddish-pink to lightly pink in the center, 8 to 10 minutes. An instant-read thermometer inserted into the center should read from 130 degrees F (54 degrees C) to 140 degrees F (60 degrees C).',
-              'Remove steaks from oven; season with salt. Let rest for 5 minutes before serving.'
+              { text: 'Place steaks side by side in large casserole dish. Add orange juice, cider vinegar, and Worcestershire sauce. Marinate, uncovered, in the refrigerator for 45 minutes.', prepTime: 1, cookTime: 5 },
+              { text: 'Preheat the oven to 425 degrees F (220 degrees C).', prepTime: 1, cookTime: 5 },
+              { text: 'Remove casserole dish from refrigerator. Cover steaks with plastic wrap and let allow to come to room temperature, at least 15 minutes.', prepTime: 1, cookTime: 5 },
+              { text: 'Place steaks on a clean work surface and generously rub with steak seasoning and black pepper.', prepTime: 1, cookTime: 5 },
+              { text: 'Heat olive oil in a cast-iron skillet over high heat.', prepTime: 1, cookTime: 5 },
+              { text: 'Cook steaks in the hot skillet until lightly browned on the bottom, 2 1/2 minutes. Flip and cook until browned on the other side and red in the center, about 2 minutes more. Transfer skillet with the steaks to the oven.', prepTime: 1, cookTime: 5 },
+              { text: 'Bake in the preheated oven until steaks are firm and reddish-pink to lightly pink in the center, 8 to 10 minutes. An instant-read thermometer inserted into the center should read from 130 degrees F (54 degrees C) to 140 degrees F (60 degrees C).', prepTime: 1, cookTime: 5 },
+              { text: 'Remove steaks from oven; season with salt. Let rest for 5 minutes before serving.', prepTime: 1, cookTime: 5 }
             ]
           })
         }
@@ -53,9 +53,9 @@ const seed = async() => {
             url: 'https://www.allrecipes.com/recipe/23431/to-die-for-fettuccine-alfredo/',
             ingredients: [15, 16, 17, 18, 19, 20, 21],
             directions: [
-              'Bring a large pot of lightly salted water to a boil. Add fettuccine and cook for 8 to 10 minutes or until al dente; drain.',
-              'Melt butter into cream in a large saucepan over low heat; add salt, pepper, and garlic salt. Increase the heat to medium; stir in grated Romano and Parmesan cheese until melted and sauce has thickened.',
-              'Add cooked pasta to sauce and toss until thoroughly coated; serve immediately.'
+              { text: 'Bring a large pot of lightly salted water to a boil. Add fettuccine and cook for 8 to 10 minutes or until al dente; drain.', prepTime: 5, cookTime: 10 },
+              { text: 'Melt butter into cream in a large saucepan over low heat; add salt, pepper, and garlic salt. Increase the heat to medium; stir in grated Romano and Parmesan cheese until melted and sauce has thickened.', prepTime: 5, cookTime: 10 },
+              { text: 'Add cooked pasta to sauce and toss until thoroughly coated; serve immediately.', prepTime: 5, cookTime: 10 }
             ]
           })
         }
