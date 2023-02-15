@@ -16,7 +16,7 @@ docker compose up --build
 deploy the latest code to localstack
 
 ```
-npm run deploy
+AWS_ACCESS_KEY_ID=testUser AWS_SECRET_ACCESS_KEY=testAccessKey npm run deploy
 ```
 
 get a list of recipes
