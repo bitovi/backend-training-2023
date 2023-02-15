@@ -1,6 +1,6 @@
 import { DynamoDBClient, ScanCommand } from '@aws-sdk/client-dynamodb'
 import { LambdaClient, InvokeCommand } from '@aws-sdk/client-lambda'
-import { unmarshall } from '@aws-sdk/util-dynamodb'
+import { marshall, unmarshall } from '@aws-sdk/util-dynamodb'
 import Ajv from 'ajv'
 import { Static, Type } from '@sinclair/typebox'
 
@@ -56,21 +56,34 @@ export async function list() {
     TableName
   }))
 
-  const recipes = Items?.map((item) => unmarshall(item))
-  const ingredients = await getIngredients()
+  const allIngredients = await getIngredients()
 
-  validateIngredients(ingredients)
+  validateIngredients(allIngredients)
+
+  const recipes = Items?.map((item) => {
+    const recipe = unmarshall(item)
+    const ingredients = recipe.ingredients?.map(
+      (ingredientId: Number) => allIngredients.find((ingredient) => ingredient.id === ingredientId)
+    )
+    // sum prepTime
+    const totalPrepTime = ingredients.reduce(
+      (accumulator:any, ingredient:any) => accumulator + ingredient.prepTime,
+      0
+    )
+
+    const totalCookTime = recipe.directions.reduce(
+      (accumulator:any, step:any) => accumulator + step.cookTime,
+      0
+    )
+
+    return { ...recipe, totalPrepTime, totalCookTime, ingredients }
+  })
 
   return {
     statusCode: 200,
     body: JSON.stringify(
       {
-        recipes: recipes?.map((recipe) => ({
-          ...recipe,
-          ingredients: recipe
-            .ingredients
-            ?.map((ingredientId: Number) => ingredients.find((ingredient) => ingredient.id === ingredientId))
-        }))
+        recipes
       },
       null,
       2

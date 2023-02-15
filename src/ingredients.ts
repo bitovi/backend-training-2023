@@ -15,6 +15,10 @@ export async function list() {
 
   return {
     statusCode: 200,
-    body: JSON.stringify(Items?.map((item) => unmarshall(item)), null, 2)
+    body: JSON.stringify(Items?.map((item) => {
+      const ingredient = unmarshall(item)
+      ingredient.prepTime = ingredient.prepTime || 0
+      return ingredient
+    }), null, 2)
   }
 }

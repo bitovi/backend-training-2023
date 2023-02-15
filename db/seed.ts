@@ -113,8 +113,7 @@ const seedData = {
       PutRequest: {
         Item: marshall({
           id: 2,
-          name: '2 tablespoons olive oil',
-          prepTime: 0
+          name: '2 tablespoons olive oil'
         })
       }
     }, {
@@ -129,32 +128,28 @@ const seedData = {
       PutRequest: {
         Item: marshall({
           id: 4,
-          name: '2 cloves garlic, minced',
-          prepTime: 0
+          name: '2 cloves garlic, minced'
         })
       }
     }, {
       PutRequest: {
         Item: marshall({
           id: 5,
-          name: '½ teaspoon kosher salt',
-          prepTime: 0
+          name: '½ teaspoon kosher salt'
         })
       }
     }, {
       PutRequest: {
         Item: marshall({
           id: 6,
-          name: '¼ teaspoon ground black pepper',
-          prepTime: 0
+          name: '¼ teaspoon ground black pepper'
         })
       }
     }, {
       PutRequest: {
         Item: marshall({
           id: 7,
-          name: '2 (6 ounce) beef top sirloin steaks',
-          prepTime: 0
+          name: '2 (6 ounce) beef top sirloin steaks'
         })
       }
     }, {
@@ -169,88 +164,77 @@ const seedData = {
       PutRequest: {
         Item: marshall({
           id: 9,
-          name: '1 cup apple cider vinegar',
-          prepTime: 0
+          name: '1 cup apple cider vinegar'
         })
       }
     }, {
       PutRequest: {
         Item: marshall({
           id: 10,
-          name: '½ cup Worcestershire sauce',
-          prepTime: 0
+          name: '½ cup Worcestershire sauce'
         })
       }
     }, {
       PutRequest: {
         Item: marshall({
           id: 11,
-          name: '1 ½ tablespoons steak seasoning',
-          prepTime: 0
+          name: '1 ½ tablespoons steak seasoning'
         })
       }
     }, {
       PutRequest: {
         Item: marshall({
           id: 12,
-          name: 'freshly ground black pepper to taste',
-          prepTime: 0
+          name: 'freshly ground black pepper to taste'
         })
       }
     }, {
       PutRequest: {
         Item: marshall({
           id: 13,
-          name: '2 teaspoons olive oil',
-          prepTime: 0
+          name: '2 teaspoons olive oil'
         })
       }
     }, {
       PutRequest: {
         Item: marshall({
           id: 14,
-          name: 'sea salt to taste',
-          prepTime: 0
+          name: 'sea salt to taste'
         })
       }
     }, {
       PutRequest: {
         Item: marshall({
           id: 15,
-          name: '24 ounces dry fettuccine pasta',
-          prepTime: 0
+          name: '24 ounces dry fettuccine pasta'
         })
       }
     }, {
       PutRequest: {
         Item: marshall({
           id: 16,
-          name: '1 cup butter',
-          prepTime: 0
+          name: '1 cup butter'
         })
       }
     }, {
       PutRequest: {
         Item: marshall({
           id: 17,
-          name: '¾ pint heavy cream',
-          prepTime: 0
+          name: '¾ pint heavy cream'
         })
       }
     }, {
       PutRequest: {
         Item: marshall({
           id: 18,
-          name: 'salt and pepper to taste',
-          prepTime: 0
+          name: 'salt and pepper to taste'
         })
       }
     }, {
       PutRequest: {
         Item: marshall({
           id: 19,
-          name: '1 dash garlic salt',
-          prepTime: 0
+          name: '1 dash garlic salt'
         })
       }
     }, {
