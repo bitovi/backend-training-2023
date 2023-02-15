@@ -2,6 +2,11 @@
 
 ## Usage
 
+install deps
+```
+npm i
+```
+
 start localstack
 
 ```
@@ -11,7 +16,7 @@ docker compose up --build
 deploy the latest code to localstack
 
 ```
-npm deploy
+npm run deploy
 ```
 
 get a list of recipes
