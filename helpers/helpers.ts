@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import axios from 'axios'
 import { parse } from 'node-html-parser'
 
@@ -15,8 +16,10 @@ const findTime = (html: string): IURLTime => {
   try {
     const root = parse(html)
     const recipeValues = root.querySelectorAll('.mntl-recipe-details__value')
-    const prepTime = recipeValues[0].childNodes[0].innerText
-    const cookTime = recipeValues[1].childNodes[0].innerText
+    const rawPrepTime = recipeValues[0].childNodes[0].innerText
+    const rawCookTime = recipeValues[1].childNodes[0].innerText
+    const prepTime = rawPrepTime.split(' ')[0]
+    const cookTime = rawCookTime.split(' ')[0]
     return {
       prepTime,
       cookTime
@@ -24,8 +27,8 @@ const findTime = (html: string): IURLTime => {
   } catch (error) {
     console.error(error)
     return {
-      prepTime: 0,
-      cookTime: 0
+      prepTime: '0',
+      cookTime: '0'
     }
   }
 }
