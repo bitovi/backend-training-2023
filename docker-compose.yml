@@ -23,6 +23,7 @@ services:
   cart-service:
     networks:
       - network
+    restart: always
     container_name: cart-service
     depends_on:
       - db
@@ -47,6 +48,7 @@ services:
   product-service:
     networks:
       - network
+    restart: always
     container_name: product-service
     depends_on:
       - db
