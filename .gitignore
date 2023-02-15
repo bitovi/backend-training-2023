@@ -4,3 +4,5 @@ dist
 
 # Serverless directories
 .serverless
+
+.env

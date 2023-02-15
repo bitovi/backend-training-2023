@@ -18,9 +18,11 @@ const lambdaClient = new LambdaClient(awsConfig)
 
 const IngredientSchema = Type.Object({
   id: Type.Number(),
-  name: Type.String()
+  name: Type.String(),
+  prepTime: Type.Number()
 }, {
-  additionalProperties: false
+  additionalProperties: false,
+  required: ['name']
 })
 
 const IngredientsSchema = Type.Array(IngredientSchema)
