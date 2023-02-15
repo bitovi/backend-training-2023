@@ -65,7 +65,7 @@ export async function list() {
     statusCode: 200,
     body: JSON.stringify(
       {
-        recipes: recipes?.map((recipe) => {
+        recipes: recipes?.map((recipe: any) => {
           const ingreds = recipe
             .ingredients
             ?.map((ingredientId: Number) => ingredients.find((ingredient) => ingredient.id === ingredientId))
