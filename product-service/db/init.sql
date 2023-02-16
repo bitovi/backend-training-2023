@@ -7,6 +7,8 @@ create database product;
 create table product
 (
   id            int primary key,
-  name          text,
-  price   text
+  name          text not null,
+  price         text not null,
+  'inStock'       boolean not null
+
 );

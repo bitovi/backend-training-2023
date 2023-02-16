@@ -1,6 +1,8 @@
 import fastify from 'fastify'
 import { PrismaClient } from '@prisma/client'
 import { v4 as uuid } from 'uuid'
+import { OutOfStockError } from './errors/out-of-stock'
+
 
 const prisma = new PrismaClient()
 
@@ -42,6 +44,10 @@ server.post('/:id', async(request: any) => {
 
   const productResp = await fetch(`${PRODUCT_SERVICE_URL}/${productId}`)
   const productDetails = await productResp.json()
+
+  if(!productDetails?.inStock) {
+    return new OutOfStockError()
+  }
 
   const cartProducts = cart?.products as Array<any> || []
   const existingIndex = cartProducts.findIndex((product: any) => product.id === productId)

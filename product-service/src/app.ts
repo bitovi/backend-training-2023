@@ -20,6 +20,20 @@ server.get('/:id', async(request) => {
   })
 })
 
+server.patch('/:id', async (request: any) => {
+  const id = Number((request.params as GetParams).id);
+  const { inStock } = request.body
+
+  return prisma.product.update({
+    where: {
+      id
+    },
+    data: {
+      inStock
+    }
+  })
+})
+
 server.listen({ host: '0.0.0.0', port: APP_PORT }, (err, address) => {
   if (err) {
     console.error(err)
