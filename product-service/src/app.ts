@@ -17,6 +17,18 @@ server.get('/:id', async(request) => prisma.product.findUnique({
   }
 }))
 
+server.patch('/:id', async(request: any  ) =>{
+  const {stockstatus} = request.body as any
+  return prisma.product.update({
+    where: {
+      id: Number((request.params as GetParams).id)
+    },
+      data: {
+        stockstatus
+      }
+    })
+  })
+
 server.listen({ host: '0.0.0.0', port: APP_PORT }, (err, address) => {
   if (err) {
     console.error(err)

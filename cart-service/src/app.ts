@@ -40,7 +40,9 @@ server.post('/:id', async(request: any) => {
 
   const productResp = await fetch(`${PRODUCT_SERVICE_URL}/${productId}`)
   const productDetails = await productResp.json()
-
+  if (productDetails.stockstatus == false) {
+    throw new Error('Product out of stock')
+  }
   const cartProducts = cart?.products as Array<any> || []
   const existingIndex = cartProducts.findIndex((product: any) => product.id === productId)
 

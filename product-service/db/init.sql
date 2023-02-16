@@ -8,5 +8,6 @@ create table product
 (
   id            int primary key,
   name          text,
-  price   text
+  price         text,
+  stockstatus   boolean
 );
