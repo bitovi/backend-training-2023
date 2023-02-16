@@ -21,14 +21,12 @@ server.get('/:id', async(request) => {
   })
 })
 
-server.post('/', async() => {
-  return prisma.cart.create({
-    data: {
-      id: uuid(),
-      products: []
-    }
-  })
-})
+server.post('/', async() => prisma.cart.create({
+  data: {
+    id: uuid(),
+    products: []
+  }
+}))
 
 server.post('/:id', async(request: any) => {
   const { id } = request.params as GetParams
