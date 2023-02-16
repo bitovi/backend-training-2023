@@ -1,15 +1,14 @@
-'use strict';
-
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  async up (queryInterface, { DataTypes }) {
-    const transaction = await queryInterface.sequelize.transaction();
+  async up(queryInterface, sequelize) {
+    const { DataTypes } = sequelize
+    const transaction = await queryInterface.sequelize.transaction()
     try {
-      await queryInterface.createTable("users", {
+      await queryInterface.createTable('users', {
         uuid: {
           type: DataTypes.UUID,
           defaultValue: DataTypes.UUIDV4,
-          primaryKey: true,
+          primaryKey: true
         },
         first_name: {
           type: DataTypes.STRING(50)
@@ -20,24 +19,27 @@ module.exports = {
         email: {
           type: DataTypes.STRING(254)
         },
-        created_at: DataTypes.DATE
-      }, { transaction });
-      await transaction.commit();
+        created_at: {
+          type: DataTypes.DATE,
+          defaultValue: sequelize.literal('CURRENT_TIMESTAMP')
+        }
+      }, { transaction })
+      await transaction.commit()
     } catch (error) {
-      console.error(error);
-      await transaction.rollback();
-      throw error;
+      console.error(error)
+      await transaction.rollback()
+      throw error
     }
   },
 
-  async down (queryInterface, Sequelize) {
-    const transaction = await queryInterface.sequelize.transaction();
+  async down(queryInterface) {
+    const transaction = await queryInterface.sequelize.transaction()
     try {
-      await queryInterface.dropTable("users");
-      await transaction.commit();
+      await queryInterface.dropTable('users')
+      await transaction.commit()
     } catch (error) {
-      await transaction.rollback();
-      throw error;
+      await transaction.rollback()
+      throw error
     }
   }
-};
+}
