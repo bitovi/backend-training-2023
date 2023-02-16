@@ -38,7 +38,8 @@ Current Architecture
 We have a Recipe and an Ingredient endpoint, which can list the ingredients and recipes. The recipe endpoint will fetch the ingredients for each recipe and then filter them based on the recipe.
 
 ## Technical Requirements
-Add prep time to the ingredient schema.
-Add cook time to the ingredient schema.
-When building the recipe, combine the prep time for an estimated prep time.
-When building the recipe, combine the cook time for an estimated cook time.
+
+- Add prep time to the ingredient schema.
+- Add cook time to the ingredient schema.
+- When building the recipe, combine the prep time for an estimated prep time.
+- When building the recipe, combine the cook time for an estimated cook time.
