@@ -8,8 +8,8 @@ datasource db {
 }
 
 model product {
-  id    Int     @id
-  name  String?
-  price String?
+  id                 Int     @id
+  name               String?
+  price              String?
   available_quantity Int?
 }
