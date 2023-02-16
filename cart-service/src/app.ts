@@ -21,18 +21,20 @@ server.get('/:id', async(request) => {
   })
 })
 
-server.post('/', async() => {
-  return prisma.cart.create({
-    data: {
-      id: uuid(),
-      products: []
-    }
-  })
-})
+server.post('/', async() => prisma.cart.create({
+  data: {
+    id: uuid(),
+    products: []
+  }
+}))
 
 server.post('/:id', async(request: any) => {
   const { id } = request.params as GetParams
   const { productId, quantity } = request.body
+
+  if (Number(quantity) === 0) {
+    throw new Error('Quantity cannot be zero')
+  }
 
   const cart = await prisma.cart.findUnique({
     where: {
@@ -42,12 +44,23 @@ server.post('/:id', async(request: any) => {
 
   const productResp = await fetch(`${PRODUCT_SERVICE_URL}/${productId}`)
   const productDetails = await productResp.json()
+  if (!productDetails) {
+    throw new Error('Product does not exist')
+  }
+  console.log(`------${productDetails.availableQuantity}`)
 
   const cartProducts = cart?.products as Array<any> || []
   const existingIndex = cartProducts.findIndex((product: any) => product.id === productId)
 
+  const existingQuantity = existingIndex >= 0 ? cartProducts[existingIndex].quantity : 0
+  const newQuantity = existingQuantity + quantity
+
+  if (newQuantity > productDetails.availableQuantity) {
+    throw new Error(`Quantity not available, only ${productDetails.availableQuantity} left`)
+  }
+
   if (existingIndex >= 0) {
-    cartProducts[existingIndex].quantity += quantity
+    cartProducts[existingIndex].quantity = newQuantity
   } else {
     cartProducts.push({
       ...productDetails,
