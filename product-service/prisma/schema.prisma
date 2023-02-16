@@ -11,5 +11,5 @@ model product {
   id    Int     @id
   name  String?
   price String?
-  availableQuantity Int?
+  available_quantity Int?
 }
