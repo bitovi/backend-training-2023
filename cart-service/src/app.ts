@@ -1,17 +1,19 @@
 import fastify from 'fastify'
 import { PrismaClient } from '@prisma/client'
 import { v4 as uuid } from 'uuid'
+import validateQuantity from './validation'
 
 const prisma = new PrismaClient()
 
 const APP_PORT = Number(process.env?.APP_PORT) || 3000
-const PRODUCT_SERVICE_URL = process.env?.PRODUCT_SERVICE_URL || 'http://localhost:3001'
+const PRODUCT_SERVICE_URL =
+  process.env?.PRODUCT_SERVICE_URL || 'http://localhost:3001'
 const server = fastify({ logger: true })
 
 type GetParams = {
   id: string
 }
-server.get('/:id', async(request) => {
+server.get('/:id', async (request) => {
   const { id } = request.params as GetParams
 
   return prisma.cart.findUnique({
@@ -21,14 +23,16 @@ server.get('/:id', async(request) => {
   })
 })
 
-server.post('/', async() => prisma.cart.create({
-  data: {
-    id: uuid(),
-    products: []
-  }
-}))
+server.post('/', async () =>
+  prisma.cart.create({
+    data: {
+      id: uuid(),
+      products: []
+    }
+  })
+)
 
-server.post('/:id', async(request: any) => {
+server.post('/:id', async (request: any) => {
   const { id } = request.params as GetParams
   const { productId, quantity } = request.body
 
@@ -41,19 +45,26 @@ server.post('/:id', async(request: any) => {
   const productResp = await fetch(`${PRODUCT_SERVICE_URL}/${productId}`)
   const productDetails = await productResp.json()
 
-  const cartProducts = cart?.products as Array<any> || []
-  const existingIndex = cartProducts.findIndex((product: any) => product.id === productId)
+  const cartProducts = (cart?.products as Array<any>) || []
+  const existingIndex = cartProducts.findIndex(
+    (product: any) => product.id === productId
+  )
+
+  const { updatedQuantity, message } = validateQuantity({
+    quantity,
+    productDetails
+  })
 
   if (existingIndex >= 0) {
     cartProducts[existingIndex].quantity += quantity
   } else {
     cartProducts.push({
       ...productDetails,
-      quantity
+      quantity: updatedQuantity
     })
   }
 
-  return prisma.cart.update({
+  const data = await prisma.cart.update({
     where: {
       id
     },
@@ -61,6 +72,8 @@ server.post('/:id', async(request: any) => {
       products: cartProducts
     }
   })
+
+  return message.length > 1 ? { message, data } : data
 })
 
 server.listen({ host: '0.0.0.0', port: APP_PORT }, (err, address) => {
