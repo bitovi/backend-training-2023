@@ -1,37 +1,20 @@
-# Backend Department Training 2023 - Recipes Example
+# Lending Platform Example
 
-## Usage
+## Getting started
 
-install deps
+`docker compose up --build --detach`
+
+## Create new migration
+
+`./node_modules/.bin/sequelize migration:generate --name="Migration name here"`
+
+## Approve a loan and assign credit rating
+
+```bash
+curl --location --request PATCH 'http://localhost:8080/loans/19b75a10-cb68-4df9-83c3-16f752aba227' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "status": "approved",
+    "interest_rate_uuid": "8629aadb-e65b-4b28-a429-dd74c36ea60e"
+}'
 ```
-npm ci
-```
-
-start localstack
-
-```
-docker compose up --build
-```
-
-set environment variables
-
-```
-source .env
-```
-
-deploy the latest code to localstack
-
-```
-npm run deploy
-```
-
-get a list of recipes
-
-```
-curl http://localhost:4566/restapis/<id>/local/_user_request_/recipes
-```
-
-Move directions to its own endpoint and make recipes data reference directions by ID
-Add CRUD endpoints for recipes, ingredients, and directions
-Have two recipes share the same ingredient with different directions
-Include a direction with two times like "wait 15 minutes, bake for 25 minutes"

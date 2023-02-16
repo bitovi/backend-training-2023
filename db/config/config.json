@@ -1,0 +1,10 @@
+{
+  "development": {
+    "username": "dbuser",
+    "password": "dbpassword",
+    "database": "lending_platform",
+    "host": "db",
+    "port": 3306,
+    "dialect": "mysql"
+  }
+}
