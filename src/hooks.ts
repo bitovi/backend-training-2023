@@ -2,17 +2,18 @@ import createError from 'http-errors'
 import { LoanApplicationsModel, RatesModel, UsersModel } from './models'
 
 LoanApplicationsModel.addHook('beforeUpdate', async (record) => {
-  console.error('lskjdflksjdlfksjdlfksjdlkfjsldkfj')
   // If interest_rate_uuid id null, throw RateMissingError
   if (!record.getDataValue('interest_rate_uuid')) {
     throw createError(418, 'RateMissingError')
   }
 
+  // Fetch the corresponding Rate for this loan
   const rate = await RatesModel.findByPk(record.getDataValue('interest_rate_uuid'))
   if (!rate) {
     throw createError(418, 'UnknownRateError')
   }
 
+  // Fetch the corresponding User for this loan
   const applicant = await UsersModel.findByPk(record.getDataValue('applicant'))
   if (!applicant) {
     throw createError(418, 'UnknownApplicantError')
