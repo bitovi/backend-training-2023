@@ -14,7 +14,7 @@ module.exports = {
           type: DataTypes.DECIMAL(12, 2),
           allowNull: true
         },
-        original_balance: {
+        requested_amount: {
           type: DataTypes.DECIMAL(12, 2)
         },
         applicant: {

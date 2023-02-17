@@ -18,7 +18,7 @@ export const LoanApplicationsModel = sequelize.define('loan_applications', {
     type: DataTypes.DECIMAL(12, 2),
     allowNull: true
   },
-  original_balance: {
+  requested_amount: {
     type: DataTypes.DECIMAL(12, 2)
   },
   // TODO setup relationship to users

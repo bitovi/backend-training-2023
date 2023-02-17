@@ -3,6 +3,7 @@ import koaBody from 'koa-body'
 import Router from 'koa-router'
 import { RatesModel, UsersModel, LoanApplicationsModel } from './models'
 import { readMiddleware, updateMiddleware } from './middleware'
+import './hooks'
 
 const { HTTP_PORT } = process.env
 

@@ -20,7 +20,8 @@ export function updateMiddleware(Model: ModelDefined<Record<string, unknown>, Re
     await Model.update(ctx.request.body, {
       where: {
         uuid
-      }
+      },
+      individualHooks: true
     })
 
     // We need to call next so that the following middleware (readMiddleware) can set the `ctx.body`
