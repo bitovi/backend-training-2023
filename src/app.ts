@@ -12,7 +12,7 @@ const router = new Router()
 
 app.use(koaBody())
 
-app.use(async(ctx, next) => {
+app.use(async (ctx, next) => {
   try {
     await next()
   } catch (error) {
