@@ -4,8 +4,8 @@ module.exports = {
     const { DataTypes } = Sequelize
     try {
       await queryInterface.addColumn(
-        'interest_rates',
-        'minimum_credit_score',
+        'users',
+        'credit_score',
         {
           type: DataTypes.INTEGER,
           allowNull: false
@@ -17,11 +17,11 @@ module.exports = {
     }
   },
 
-  async down(queryInterface) {
+  async down (queryInterface) {
     try {
-      await queryInterface.removeColumn('interest_rates', 'minimum_credit_score')
+      await queryInterface.removeColumn('users', 'credit_score')
     } catch (error) {
       console.error(error)
     }
   }
-}
+};
