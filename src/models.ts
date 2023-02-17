@@ -45,6 +45,9 @@ export const RatesModel = sequelize.define('interest_rates', {
   interest_percent: {
     type: DataTypes.TINYINT
   },
+  minimum_credit_score: {
+    type: DataTypes.INTEGER
+  },
   created_at: DataTypes.DATE
 }, {
   timestamps: false
@@ -64,6 +67,9 @@ export const UsersModel = sequelize.define('users', {
   },
   email: {
     type: DataTypes.STRING(254)
+  },
+  credit_score: {
+    type: DataTypes.INTEGER
   },
   created_at: DataTypes.DATE
 }, {
